@@ -48,27 +48,34 @@ function blowUp (s: string) {
   var returnStr: string = ""
   console.log(s.length + ", "  + s)
   if (s.length === 1) {
+      console.log("\n0\n")
     if (!isNum(s.substr(0))) {
+      console.log("\n0.5\n")
         returnStr = s.substr(0)
     }
   } else if (s.length > 1) {
-      if (isNum(s.substr(0))) {
-        let charNum: number = parseInt(s.substr(0))
-        console.log(charNum)
-        if (isNum(s.substr(1))) {
-          for (var counter = 1; counter < charNum; counter++) {
-            returnStr = returnStr + s.substr(1)
+      console.log("\n1\n")
+      console.log(isNum(s.substr(0, 1)) + ", " + s.substr(0, 1))
+      if (isNum(s.substr(0, 1))) {
+        console.log("\n3\n")
+        let charNum: number = parseInt(s.substr(0, 1))
+        console.log(s.substr(1, 2))
+        if (isNum(s.substr(1, 2))) {
+          for (var counter = 0; counter < charNum; counter++) {
+            returnStr = returnStr + s.substr(1, 2)
           }
         } else {
-          for (var counter = 0; counter < charNum; counter++) {
-            returnStr = returnStr + s.substr(1)
+          for (var counter = 1; counter < charNum; counter++) {
+            returnStr = returnStr + s.substr(1, 2)
           }
         }
         returnStr = returnStr + blowUp(s.substr(1, s.length - 1))
       } else {
+        console.log("\n4\n")
         returnStr = s.substr(0) + blowUp(s.substr(1, s.length - 1))
       }
   } else {
+      console.log("\n2\n")
     returnStr = s.substr(0)
   }
   return returnStr
@@ -80,7 +87,7 @@ const rl = readline.createInterface({
 })
 
 rl.question('Input a string: ', function (answer) {
-  const text = isNum(answer)
+  const text = blowUp(answer)
   console.log('\nYour string was BLOWN UP!\n' + text)
   rl.close()
 })
